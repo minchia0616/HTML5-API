@@ -14,7 +14,9 @@
     <input type="text" name="myName" id="myName" required autofocus><br>
 
     <label for="myPass">密碼：</label>
-    <input type="password" name="myPass" id="myPass" pattern=".{6,}" required><br>
+    <!-- <input type="password" name="myPass" id="myPass" pattern=".{6,}" required oninvalid="console.log(event);return false;"><br> -->
+    <input type="password" name="myPass" id="myPass" pattern=".{6,}" required
+    oninvalid="onPWInvalid(event);return false;"><br>
 
     <label for="myPass2">密碼確認：</label>
     <input type="password" name="myPass2" id="myPass2"><br>
@@ -34,6 +36,12 @@
             myPass2.setCustomValidity(''); // 取消
         }
     });
+
+    const onPWInvalid = event=>{
+        console.log(event);
+        console.log(event.currentTarget.validity);
+        console.log(event.currentTarget.validationMessage);
+    }
 </script>
 </body>
 </html>
