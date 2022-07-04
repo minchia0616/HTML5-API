@@ -16,12 +16,31 @@
     <script>
         const info = document.querySelector('#info');
 
+        // 把contenteditable 存入 localStorage
+        const oldContent = localStorage.getItem('my_content');
+        if(oldContent){
+            info.innerText = oldContent;
+        }
+
+        info.addEventListener('focus', function(){
+            info.style.border = '1px solid red';
+            info.style.backgroundColor = 'yellow';
+        });
+
+        info.addEventListener('blur', function(){
+            info.style.border = '1px solid gray';
+            info.style.backgroundColor = 'white';
+        });
+
         info.addEventListener('input', function(){
             console.log(info.innerHTML);
             console.log(info.innerText);
+            localStorage.setItem('my_content', info.innerText);
         });
 
 
     </script>
 </body>
 </html>
+<!-- Local Storage  -->
+<!-- https://ithelp.ithome.com.tw/articles/10223253 -->
