@@ -19,10 +19,11 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background-color: pink;
+            background-color: rgb(246, 156, 45);
             border: 1px solid gray;
             text-align: center;
             line-height: 60px;
+            cursor: pointer;
         }
         .rect2 {
             position: relative;
@@ -53,7 +54,8 @@
         balls.attr('draggable', true);
 
         const myDragStart = event=>{
-            myDragTarget = $(event.currentTarget);  // 用戶拖拉的對象
+            myDragTarget = $(event.currentTarget);
+            event.originalEvent.dataTransfer.setData('text', myDragTarget.html());
         };
         const myDragEnd = event=>{
             myDragTarget = null;
@@ -67,13 +69,11 @@
         });
 
 
-        // 移動到範圍內觸發，先判斷是否為用戶拖拉的對象(否則其他頁面的拖拉對象也可以進到範圍內)
-        // 進到範圍內之後移除可以拖拉的功能，然後在範圍內加上拖拉對象的節點
-        // clone 設成 true 才會全部屬性拷貝
+        
         rect2.on('drop', event=>{
+            console.log(event.originalEvent.dataTransfer.getData('text'));
             if(myDragTarget){
                 const c = myDragTarget.clone(true);
-                c.removeAttr('draggable');
                 rect2.append(c);
             }
         });
