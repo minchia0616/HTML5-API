@@ -31,7 +31,8 @@ server.on('listening', onListening);
 
 
 // require('../routes/ws-echo')(server);
-require(__dirname+'/../routes/ws-echo')(server);
+// require(__dirname+'/../routes/ws-echo')(server);
+require(__dirname+'/../routes/ws-chat')(server);
 
 /**
  * Normalize a port into a number, string, or false.

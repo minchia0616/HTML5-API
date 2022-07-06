@@ -1,31 +1,37 @@
-const WebSocket = require('ws');
-const sessionParser = require(__dirname + '/session-parser');
+const webSocket = require('ws');
 
-const createChatServer = server=>{
-	const wsServer = new WebSocket.Server({server});
-	const map = new Map(); // 存放對應的名稱
-	wsServer.on('connection', (ws, req)=>{
-		console.log('req.session:', req.session);
-		sessionParser(req, {}, () => {
-			console.log('req.session:', req.session);
-		});
 
-		map.set(ws, {name: ''}); // 設定對應的物件
-		ws.on('message', message=>{
-			const mObj = map.get(ws); // 取得對應的物件
-			let msg;
-			if(! mObj.name){
-				mObj.name = message;
-				msg = `${mObj.name} 進入，人數：${wsServer.clients.size}`;
-			} else {
-				msg = `${mObj.name}: ${message}`;	
-			}
-			wsServer.clients.forEach(c=>{
-				if(c.readyState===WebSocket.OPEN){
-					c.send(msg);
-				}
-			});
-		});
-	});
+const createChatServer = server =>{
+    const wsServer = new webSocket.Server({server});
+    const map = new Map();
+
+    wsServer.on('connection', (ws, req)=>{
+
+        map.set(ws, {name:''});
+
+        ws.on('message', message=>{
+            const mObj = map.get(ws);
+            let msg = '';
+
+            if(!mObj.name){
+                mObj.name = message.toString();
+                msg = `${mObj.name} 進入聊天室, ${wsServer.clients.size}`;
+            } else {
+                msg = `${mObj.name}: ${message}`;
+            }
+            wsServer.clients.forEach( c=>{
+                if(c.readyState===webSocket.OPEN){
+                    c.send(msg);
+                }
+            })
+        });
+        ws.on('close', (event)=>{
+            console.log({event});
+            console.log('close 連線數', wsServer.clients.size);
+        })
+
+    });
+
 };
+
 module.exports = createChatServer;
