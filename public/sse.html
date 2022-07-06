@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="info">no data</div>
+
+    <script>
+        const info = document.querySelector('#info');
+
+        const es = new EventSource('/try-sse');
+
+        es.addEventListener('open', event=>{
+            info.style.backgroundColor = 'orange';
+            console.log('open:', event);
+        });
+        es.addEventListener('message', event=>{
+            info.innerHTML = `
+            id: ${event.lastEventId}<br>
+            data: ${event.data}`;
+
+        });
+        es.addEventListener('error', event=>{
+            console.log({event});
+        });
+
+        // 若關閉伺服器，會每隔5秒(預設) 重新嘗試連線
+    </script>
+</body>
+</html>

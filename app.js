@@ -24,6 +24,24 @@ app.use('/',serveIndex('public',{'icons':true}));
 // app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+app.get('/try-sse', (req, res)=>{
+  let id = 30;
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream; charset=UTF-8',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive'
+  });
+
+  setInterval(function(){
+    const now = new Date();
+
+    res.write(`id: ${id}\n`);
+    res.write(`data: ${now.toString()}\n\n`);
+
+    id ++;
+  }, 1200);
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    //連教室的電腦
+    // const socket = new WebSocket('ws://192.168.24.200:5000');
+
+    //連自己的電腦，可看到連線數
+    const socket = new WebSocket('ws://localhost:3700');
+
+    socket.addEventListener('open', event=>{
+        console.log({open: event});
+    });
+    socket.addEventListener('message', event=>{
+        console.log({message: event});
+    });
+    socket.addEventListener('close', event=>{
+        console.log({close: event});
+    });
+
+    </script>
+
+
+</body>
+</html>
