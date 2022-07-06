@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="saveData()">save data</button>
+    <br>
+    
+
+    <script>
+        // sessionStorage 只保留於單一瀏覽器視窗or分頁
+        // 複製分頁可以保留，但開新分頁把網址貼上則不會保留sessionStorage
+        function saveData(){
+            const k = 'mykey-' + Date.now();
+            const v = Math.random();
+            sessionStorage.setItem(k, v);
+        }
+
+
+
+    </script>
+</body>
+</html>
