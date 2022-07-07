@@ -1,5 +1,5 @@
 const WebSocket = require('ws');
-const sessionParser = require(__dirname + '/session-parser');
+// const sessionParser = require(__dirname + '/session-parser');
 
 const createChatServer = server=>{
 	const wsServer = new WebSocket.Server({server});
@@ -8,7 +8,7 @@ const createChatServer = server=>{
 		ws.on('message', message=>{
 			wsServer.clients.forEach(c=>{
 				if(c.readyState===WebSocket.OPEN){
-					c.send(message);
+					c.send(message.toString());
 				}
 			});
 		});
